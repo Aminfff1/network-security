@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - نظام كشف التهديدات</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/ar.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(45deg, #1a365d, #2563eb);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .threat-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .sidebar-link {
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- القائمة الجانبية -->
+    <aside class="fixed right-0 top-0 w-64 h-full glass-card p-6">
+        <div class="flex items-center space-x-4 mb-8">
+            <img src="https://picsum.photos/50/50?random=1" alt="Logo" class="w-10 h-10 rounded-full">
+            <h1 class="text-xl font-bold text-white">نظام كشف التهديدات</h1>
+        </div>
+
+        <nav class="space-y-2">
+            <a href="#" class="sidebar-link active flex items-center text-white p-3 rounded-lg">
+                <span class="mr-3">🏠</span>
+                لوحة التحكم
+            </a>
+            <a href="#" class="sidebar-link flex items-center text-white p-3 rounded-lg">
+                <span class="mr-3">🌐</span>
+                الشبكات
+            </a>
+            <a href="#" class="sidebar-link flex items-center text-white p-3 rounded-lg">
+                <span class="mr-3">⚠️</span>
+                التهديدات
+            </a>
+            <a href="#" class="sidebar-link flex items-center text-white p-3 rounded-lg">
+                <span class="mr-3">📊</span>
+                التقارير
+            </a>
+            <a href="#" class="sidebar-link flex items-center text-white p-3 rounded-lg">
+                <span class="mr-3">⚙️</span>
+                الإعدادات
+            </a>
+        </nav>
+
+        <div class="absolute bottom-6 right-6 left-6">
+            <div class="flex items-center space-x-4 mb-4">
+                <img src="https://picsum.photos/40/40?random=2" alt="Profile" class="w-10 h-10 rounded-full">
+                <div>
+                    <p class="text-white font-bold">أحمد محمد</p>
+                    <p class="text-blue-200 text-sm">مدير النظام</p>
+                </div>
+            </div>
+            <button onclick="logout()" class="w-full bg-white/10 text-white p-3 rounded-lg hover:bg-white/20 transition">
+                تسجيل خروج
+            </button>
+        </div>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="mr-64 p-8">
+        <!-- رأس الصفحة -->
+        <header class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-white mb-2">لوحة التحكم</h1>
+                <p class="text-blue-200">مراقبة وتحليل الشبكة في الوقت الفعلي</p>
+            </div>
+            <button onclick="addNewNetwork()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                إضافة شبكة جديدة
+            </button>
+        </header>
+
+        <!-- البطاقات الإحصائية -->
+        <div class="grid grid-cols-4 gap-6 mb-8">
+            <div class="glass-card p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl text-white">الشبكات النشطة</h3>
+                    <span class="text-green-400 text-2xl">🟢</span>
+                </div>
+                <p class="text-3xl font-bold text-white">3</p>
+                <p class="text-blue-200">من أصل 5 شبكات</p>
+            </div>
+            <div class="glass-card p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl text-white">التهديدات اليوم</h3>
+                    <span class="text-red-400 text-2xl">⚠️</span>
+                </div>
+                <p class="text-3xl font-bold text-white">12</p>
+                <p class="text-blue-200">4 تهديدات خطيرة</p>
+            </div>
+            <div class="glass-card p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl text-white">حركة البيانات</h3>
+                    <span class="text-blue-400 text-2xl">📊</span>
+                </div>
+                <p class="text-3xl font-bold text-white">1.2 TB</p>
+                <p class="text-blue-200">في آخر 24 ساعة</p>
+            </div>
+            <div class="glass-card p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl text-white">وقت التشغيل</h3>
+                    <span class="text-yellow-400 text-2xl">⚡</span>
+                </div>
+                <p class="text-3xl font-bold text-white">99.9%</p>
+                <p class="text-blue-200">متوسط 30 يوم</p>
+            </div>
+        </div>
+
+        <!-- الرسوم البيانية -->
+        <div class="grid grid-cols-2 gap-6 mb-8">
+            <div class="glass-card p-6">
+                <h3 class="text-xl text-white mb-4">حركة الشبكة</h3>
+                <div class="chart-container">
+                    <canvas id="networkTrafficChart"></canvas>
+                </div>
+            </div>
+            <div class="glass-card p-6">
+                <h3 class="text-xl text-white mb-4">توزيع التهديدات</h3>
+                <div class="chart-container">
+                    <canvas id="threatDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- آخر التهديدات -->
+        <div class="glass-card p-6">
+            <h3 class="text-xl text-white mb-4">آخر التهديدات المكتشفة</h3>
+            <div class="space-y-4">
+                <div class="bg-red-500/20 p-4 rounded-lg threat-pulse">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h4 class="text-white font-bold">محاولة هجوم DDoS</h4>
+                            <p class="text-blue-200">شبكة المكتب الرئيسي</p>
+                        </div>
+                        <p class="text-white">قبل 5 دقائق</p>
+                    </div>
+                </div>
+                <div class="bg-yellow-500/20 p-4 rounded-lg">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h4 class="text-white font-bold">نشاط مشبوه</h4>
+                            <p class="text-blue-200">شبكة الفرع الأول</p>
+                        </div>
+                        <p class="text-white">قبل 15 دقيقة</p>
+                    </div>
+                </div>
+                <div class="bg-blue-500/20 p-4 rounded-lg">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h4 class="text-white font-bold">محاولة تسجيل دخول فاشلة</h4>
+                            <p class="text-blue-200">شبكة المكتب الرئيسي</p>
+                        </div>
+                        <p class="text-white">قبل 30 دقيقة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // تهيئة الرسوم البيانية
+        function initializeCharts() {
+            // رسم بياني لحركة الشبكة
+            const trafficCtx = document.getElementById('networkTrafficChart').getContext('2d');
+            new Chart(trafficCtx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                    datasets: [{
+                        label: 'حركة البيانات (GB)',
+                        data: [30, 45, 60, 70, 55, 40],
+                        borderColor: '#3B82F6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'white'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'white'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'white'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // رسم بياني لتوزيع التهديدات
+            const threatCtx = document.getElementById('threatDistributionChart').getContext('2d');
+            new Chart(threatCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['DDoS', 'تصيد احتيالي', 'برمجيات خبيثة', 'محاولات تسلل'],
+                    datasets: [{
+                        data: [30, 25, 20, 25],
+                        backgroundColor: [
+                            '#EF4444',
+                            '#F59E0B',
+                            '#10B981',
+                            '#3B82F6'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: 'white'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // وظائف التنقل
+        function addNewNetwork() {
+            window.location.href = 'add-network.html';
+        }
+
+        function logout() {
+            // إضافة منطق تسجيل الخروج هنا
+            window.location.href = 'login.html';
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCharts();
+        });
+    </script>
+</body>
+</html>

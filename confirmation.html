@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأكيد الإعدادات - نظام كشف التهديدات</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(45deg, #1a365d, #2563eb);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .step-active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+
+        .confirmation-modal {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .pulse {
+            animation: pulse-animation 2s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4">
+    <!-- القائمة العلوية -->
+    <nav class="glass-card fixed w-full top-0 left-0 px-6 py-4 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="https://picsum.photos/50/50?random=1" alt="Logo" class="w-10 h-10 rounded-full">
+                <h1 class="text-2xl font-bold text-white">نظام كشف التهديدات</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-white">مرحباً، أحمد</span>
+                <button onclick="window.location.href='index.html'" class="bg-white/10 text-white px-4 py-2 rounded-lg hover:bg-white/20 transition">
+                    تسجيل خروج
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container mx-auto pt-24">
+        <!-- خطوات الإعداد -->
+        <div class="flex justify-between mb-8">
+            <div class="flex-1 text-center">
+                <div class="w-10 h-10 rounded-full bg-white/20 border-2 border-white flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white">✓</span>
+                </div>
+                <span class="text-white">معلومات الشبكة</span>
+            </div>
+            <div class="flex-1 text-center">
+                <div class="w-10 h-10 rounded-full bg-white/20 border-2 border-white flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white">✓</span>
+                </div>
+                <span class="text-white">إعدادات المراقبة</span>
+            </div>
+            <div class="flex-1 text-center">
+                <div class="w-10 h-10 rounded-full bg-white/20 border-2 border-white flex items-center justify-center mx-auto mb-2 step-active">
+                    <span class="text-white">3</span>
+                </div>
+                <span class="text-white">التأكيد والبدء</span>
+            </div>
+        </div>
+
+        <!-- نموذج التأكيد -->
+        <div class="glass-card p-8">
+            <h2 class="text-2xl font-bold text-white mb-6">تأكيد الإعدادات</h2>
+            <p class="text-blue-200 mb-8">يرجى التأكد من صحة الإعدادات قبل البدء في المراقبة</p>
+
+            <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <span class="text-white">اسم الشبكة:</span>
+                    <span class="text-blue-200">شبكة المكتب الرئيسي</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-white">نطاق الشبكة:</span>
+                    <span class="text-blue-200">192.168.1.0/24</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-white">أنواع التهديدات:</span>
+                    <span class="text-blue-200">DDoS, تصيد احتيالي, برمجيات خبيثة</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-white">مستوى الحساسية:</span>
+                    <span class="text-blue-200">متوسط</span>
+                </div>
+            </div>
+
+            <div class="flex justify-between pt-10">
+                <button onclick="window.location.href='monitoring-settings.html'" 
+                        class="bg-white/10 text-white px-6 py-3 rounded-lg hover:bg-white/20 transition">
+                    تعديل الإعدادات
+                </button>
+                <button onclick="startMonitoring()" 
+                        class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition pulse">
+                    بدء المراقبة
+                </button>
+            </div>
+        </div>
+
+        <!-- نافذة التأكيد -->
+        <div id="confirmationModal" class="confirmation-modal fixed top-0 left-0 w-full h-full flex items-center justify-center hidden">
+            <div class="glass-card p-8 text-center">
+                <h2 class="text-2xl font-bold text-white mb-4">بدء المراقبة</h2>
+                <p class="text-blue-200 mb-6">جاري بدء عملية المراقبة، يرجى الانتظار...</p>
+                <div class="loader"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function startMonitoring() {
+            // إظهار نافذة التأكيد
+            document.getElementById('confirmationModal').classList.remove('hidden');
+            document.getElementById('confirmationModal').classList.add('flex');
+
+            // محاكاة عملية البدء
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعدادات المراقبة - نظام كشف التهديدات</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(45deg, #1a365d, #2563eb);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .input-field {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .step-active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #3B82F6;
+        }
+
+        .toggle-switch.active::after {
+            left: 28px;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4">
+    <!-- القائمة العلوية -->
+    <nav class="glass-card fixed w-full top-0 left-0 px-6 py-4 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="https://picsum.photos/50/50?random=1" alt="Logo" class="w-10 h-10 rounded-full">
+                <h1 class="text-2xl font-bold text-white">نظام كشف التهديدات</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-white">مرحباً، أحمد</span>
+                <button class="bg-white/10 text-white px-4 py-2 rounded-lg hover:bg-white/20 transition">
+                    تسجيل خروج
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container mx-auto pt-24">
+        <!-- خطوات الإعداد -->
+        <div class="flex justify-between mb-8">
+            <div class="flex-1 text-center">
+                <div class="w-10 h-10 rounded-full bg-white/20 border-2 border-white flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white">✓</span>
+                </div>
+                <span class="text-white">معلومات الشبكة</span>
+            </div>
+            <div class="flex-1 text-center">
+                <div class="w-10 h-10 rounded-full bg-white/20 border-2 border-white flex items-center justify-center mx-auto mb-2 step-active">
+                    <span class="text-white">2</span>
+                </div>
+                <span class="text-white">إعدادات المراقبة</span>
+            </div>
+            <div class="flex-1 text-center">
+                <div class="w-10 h-10 rounded-full bg-white/10 border-2 border-white/50 flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white/50">3</span>
+                </div>
+                <span class="text-white/50">التأكيد والبدء</span>
+            </div>
+        </div>
+
+        <!-- نموذج إعدادات المراقبة -->
+        <div class="glass-card p-8">
+            <h2 class="text-2xl font-bold text-white mb-6">إعدادات المراقبة</h2>
+            
+            <form class="space-y-8">
+                <!-- أنواع التهديدات -->
+                <div>
+                    <h3 class="text-xl text-white mb-4">أنواع التهديدات للمراقبة</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/10 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-white">هجمات DDoS</label>
+                                <div class="toggle-switch active"></div>
+                            </div>
+                            <p class="text-blue-200 text-sm">كشف وحماية من هجمات حجب الخدمة</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-white">التصيد الاحتيالي</label>
+                                <div class="toggle-switch active"></div>
+                            </div>
+                            <p class="text-blue-200 text-sm">حماية من محاولات سرقة البيانات</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-white">البرمجيات الخبيثة</label>
+                                <div class="toggle-switch active"></div>
+                            </div>
+                            <p class="text-blue-200 text-sm">كشف البرامج الضارة والفيروسات</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-white">محاولات التسلل</label>
+                                <div class="toggle-switch active"></div>
+                            </div>
+                            <p class="text-blue-200 text-sm">حماية من محاولات الاختراق</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- إعدادات التنبيهات -->
+                <div>
+                    <h3 class="text-xl text-white mb-4">إعدادات التنبيهات</h3>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-white mb-2">مستوى الحساسية</label>
+                            <select class="input-field w-full p-3 rounded-lg">
+                                <option value="high">عالي</option>
+                                <option value="medium" selected>متوسط</option>
+                                <option value="low">منخفض</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-white mb-2">طريقة التنبيه</label>
+                            <select class="input-field w-full p-3 rounded-lg">
+                                <option value="all">جميع الطرق</option>
+                                <option value="email">بريد إلكتروني</option>
+                                <option value="sms">رسالة نصية</option>
+                                <option value="notification">إشعارات الموقع</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- إعدادات الذكاء الاصطناعي -->
+                <div>
+                    <h3 class="text-xl text-white mb-4">إعدادات الذكاء الاصطناعي</h3>
+                    <div class="bg-white/10 p-6 rounded-lg">
+                        <div class="flex justify-between items-center mb-4">
+                            <label class="text-white">التعلم التلقائي</label>
+                            <div class="toggle-switch active"></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-white mb-2">نمط التحليل</label>
+                            <select class="input-field w-full p-3 rounded-lg">
+                                <option value="aggressive">متقدم (استهلاك أعلى للموارد)</option>
+                                <option value="balanced" selected>متوازن</option>
+                                <option value="conservative">اقتصادي (استهلاك أقل للموارد)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-white mb-2">فترة تحديث التحليل</label>
+                            <select class="input-field w-full p-3 rounded-lg">
+                                <option value="realtime">فوري</option>
+                                <option value="5min">كل 5 دقائق</option>
+                                <option value="15min">كل 15 دقيقة</option>
+                                <option value="30min">كل 30 دقيقة</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أزرار التحكم -->
+                <div class="flex justify-between pt-6">
+                    <button type="button" onclick="window.location.href='add-network.html'" 
+                            class="bg-white/10 text-white px-6 py-3 rounded-lg hover:bg-white/20 transition">
+                        رجوع
+                    </button>
+                    <button type="submit" 
+                            class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                        التالي
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // تفعيل/تعطيل المفاتيح
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                toggle.classList.toggle('active');
+            });
+        });
+
+        // معالجة تقديم النموذج
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // هنا سيتم إضافة منطق معالجة النموذج
+            window.location.href = 'confirmation.html';
+        });
+    </script>
+</body>
+</html>

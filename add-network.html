@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة شبكة جديدة - نظام كشف التهديدات</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(45deg, #1a365d, #2563eb);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .input-field {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .step-active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4">
+    <!-- القائمة العلوية -->
+    <nav class="glass-card fixed w-full top-0 left-0 px-6 py-4 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="https://picsum.photos/50/50?random=1" alt="Logo" class="w-10 h-10 rounded-full">
+                <h1 class="text-2xl font-bold text-white">نظام كشف التهديدات</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-white">مرحباً، أحمد</span>
+                <button onclick="window.location.href='index.html'" class="bg-white/10 text-white px-4 py-2 rounded-lg hover:bg-white/20 transition">
+                    تسجيل خروج
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container mx-auto pt-24">
+        <!-- خطوات الإعداد -->
+        <div class="flex justify-between mb-8">
+            <div class="flex-1 text-center">
+                <div class="w-10 h-10 rounded-full bg-white/20 border-2 border-white flex items-center justify-center mx-auto mb-2 step-active">
+                    <span class="text-white">1</span>
+                </div>
+                <span class="text-white">معلومات الشبكة</span>
+            </div>
+            <div class="flex-1 text-center">
+                <div class="w-10 h-10 rounded-full bg-white/10 border-2 border-white/50 flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white/50">2</span>
+                </div>
+                <span class="text-white/50">إعدادات المراقبة</span>
+            </div>
+            <div class="flex-1 text-center">
+                <div class="w-10 h-10 rounded-full bg-white/10 border-2 border-white/50 flex items-center justify-center mx-auto mb-2">
+                    <span class="text-white/50">3</span>
+                </div>
+                <span class="text-white/50">التأكيد والبدء</span>
+            </div>
+        </div>
+
+        <!-- نموذج إضافة الشبكة -->
+        <div class="glass-card p-8">
+            <h2 class="text-2xl font-bold text-white mb-6">إضافة شبكة جديدة</h2>
+            <form class="space-y-6">
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-white mb-2">اسم الشبكة</label>
+                        <input type="text" class="input-field w-full p-3 rounded-lg" placeholder="مثال: شبكة المكتب الرئيسي" required>
+                    </div>
+                    <div>
+                        <label class="block text-white mb-2">نطاق الشبكة</label>
+                        <input type="text" class="input-field w-full p-3 rounded-lg" placeholder="مثال: 192.168.1.0/24" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-white mb-2">واجهة الشبكة</label>
+                    <select class="input-field w-full p-3 rounded-lg">
+                        <option value="eth0">eth0</option>
+                        <option value="wlan0">wlan0</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-white mb-2">نوع الاتصال</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/10 p-4 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                            <input type="radio" name="connection" id="local" class="hidden">
+                            <label for="local" class="block text-center">
+                                <div class="text-white font-bold mb-2">شبكة محلية</div>
+                                <div class="text-blue-200">اتصال مباشر</div>
+                            </label>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                            <input type="radio" name="connection" id="remote" class="hidden">
+                            <label for="remote" class="block text-center">
+                                <div class="text-white font-bold mb-2">شبكة بعيدة</div>
+                                <div class="text-blue-200">اتصال عن بعد</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="remoteSettings" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-white mb-2">عنوان IP</label>
+                        <input type="text" class="input-field w-full p-3 rounded-lg" placeholder="أدخل عنوان IP للشبكة البعيدة">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-2">منفذ SSH</label>
+                        <input type="number" class="input-field w-full p-3 rounded-lg" placeholder="22">
+                    </div>
+                </div>
+
+                <div class="flex justify-between pt-6">
+                    <button type="button" onclick="window.location.href='login.html'" 
+                            class="bg-white/10 text-white px-6 py-3 rounded-lg hover:bg-white/20 transition">
+                        رجوع
+                    </button>
+                    <button type="submit" 
+                            class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                        التالي
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- معلومات إضافية -->
+        <div class="glass-card p-6 mt-6">
+            <h3 class="text-xl font-bold text-white mb-4">معلومات مهمة</h3>
+            <ul class="space-y-2 text-white">
+                <li class="flex items-center">
+                    <span class="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
+                    تأكد من امتلاك الصلاحيات الكافية للوصول إلى الشبكة
+                </li>
+                <li class="flex items-center">
+                    <span class="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
+                    في حالة الشبكة البعيدة، تأكد من تفعيل خدمة SSH
+                </li>
+                <li class="flex items-center">
+                    <span class="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
+                    يجب أن يكون نطاق الشبكة صحيحاً بصيغة CIDR
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <script>
+        // التبديل بين إعدادات الاتصال المحلي والبعيد
+        document.querySelectorAll('input[name="connection"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const remoteSettings = document.getElementById('remoteSettings');
+                if (e.target.id === 'remote') {
+                    remoteSettings.classList.remove('hidden');
+                } else {
+                    remoteSettings.classList.add('hidden');
+                }
+            });
+        });
+
+        // معالجة تقديم النموذج
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // هنا سيتم إضافة منطق معالجة النموذج
+            // في حالة النجاح، سيتم الانتقال إلى الخطوة التالية
+            window.location.href = 'monitoring-settings.html';
+        });
+    </script>
+</body>
+</html>
